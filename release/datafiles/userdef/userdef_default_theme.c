@@ -28,7 +28,7 @@ const bTheme U_theme_default = {
       .inner_sel = RGBA(0x5680c2ff),
       .item = RGBA(0x191919ff),
       .text = RGBA(0xccccccff),
-      .text_sel = RGBA(0xb3ffb3ff),
+      .text_sel = RGBA(0xffffffff),
       .roundness = 0.2f,
     },
     .wcol_tool = {
@@ -83,7 +83,7 @@ const bTheme U_theme_default = {
       .inner_sel = RGBA(0x80e6ffff),
       .item = RGBA(0x000000ff),
       .text = RGBA(0xccccccff),
-      .text_sel = RGBA(0xe6fff2ff),
+      .text_sel = RGBA(0xffffffff),
       .shadetop = 15,
       .shadedown = -15,
       .roundness = 0.2f,
