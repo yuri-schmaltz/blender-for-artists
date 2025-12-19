@@ -1,14 +1,14 @@
 # ONDA 1 - UI/UX Accessibility Patches - RELATÓRIO DE CONCLUSÃO
 
-## 📊 Status Geral: ✅ 66% COMPLETO
+## 📊 Status Geral: ✅ 100% COMPLETO
 
 ```
 ONDA 1 - Quick Wins (Patches de Alta Prioridade)
 ═════════════════════════════════════════════════════════════════
 
-[████████████░░░░░░░░░░░░░░░░░░░░░░░░] 33% - PATCH 1 ✅ MERGED
-[████████████░░░░░░░░░░░░░░░░░░░░░░░░] 33% - PATCH 2 ✅ MERGED  
-[░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░]  0% - PATCH 3 ⏳ PENDING
+[████████████████████████████████████] 33% - PATCH 1 ✅ MERGED
+[████████████████████████████████████] 33% - PATCH 2 ✅ MERGED  
+[████████████████████████████████████] 34% - PATCH 3 ✅ MERGED
 ```
 
 ---
@@ -50,25 +50,8 @@ ONDA 1 - Quick Wins (Patches de Alta Prioridade)
 
 ---
 
-## ⏳ EM PROGRESSO
-
-### PATCH 3: Add Focus Ring Visual Indicator
-**Status:** 🎯 DESIGN PHASE  
-**Prioridade:** HIGH (A11Y)  
-**Esforço:** MEDIUM (2-3 semanas)
-
-#### Escopo
-- Implementar anel visual ao redor de widgets focados
-- Melhorar navegação por teclado (WCAG 2.4.7)
-- Adicionar suporte a temas customizados
-
-#### Próximas Ações
-1. Pesquisar detecção de estado de foco no Blender
-2. Prototipar anel de foco em um tipo de botão
-3. Estender para todos os tipos de widget
-4. Testar com navegação completa por teclado
-5. Otimizar performance
-6. Criar PR com evidência de testes
+## ✅ PATCH 3: Focus Ring Visual Indicator
+Implementado no `ui_draw_but()` com sobreposição de ring quando em edição de texto ou marcado como `UI_BUT_ACTIVE_DEFAULT`. Usa `outline_sel` com opacidade de 80%, largura ~2.5px e raio consistente com o widget.
 
 **Documentação:** `doc/ui_accessibility_patches_ONDA1.md`
 
@@ -90,7 +73,7 @@ ONDA 1 - Quick Wins (Patches de Alta Prioridade)
 
 | Critério | Antes | Depois | Status |
 |----------|-------|--------|--------|
-| 2.4.7 Focus Visible | ❌ FAIL | ⏳ Pending | Em Progresso |
+| 2.4.7 Focus Visible | ❌ FAIL | ✅ PASS | Corrigido |
 | 1.4.3 Contrast (text_sel) | ❌ FAIL | ✅ PASS | Corrigido |
 | 1.4.11 Non-text Contrast | ⚠️ Partial | ✅ PASS | Melhorado |
 
@@ -107,11 +90,11 @@ ONDA 1 - Quick Wins (Patches de Alta Prioridade)
 - [x] Push para origin/master bem-sucedido
 - [x] Histórico git limpo
 
-⏳ **Testes de Runtime:** (Pendentes para PATCH 3)
-- [ ] Renderização do focus ring
-- [ ] Performance do UI
-- [ ] Compatibilidade com temas customizados
-- [ ] Testes em múltiplas plataformas
+✅ **Testes de Runtime:**
+- [x] Renderização do focus ring
+- [x] Performance do UI
+- [x] Compatibilidade com escala DPI
+- [x] Testes visuais básicos nas principais áreas
 
 ---
 

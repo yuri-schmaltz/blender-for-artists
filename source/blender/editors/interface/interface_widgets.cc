@@ -5406,6 +5406,27 @@ void ui_draw_but(const bContext *C, ARegion *region, uiStyle *style, uiBut *but,
       GPU_blend(GPU_BLEND_NONE);
     }
   }
+
+  /* Draw a visible focus ring for accessibility when the button has keyboard focus
+   * (text input) or is marked as the default active action in popups. */
+  if (state.is_text_input || (state.but_flag & UI_BUT_ACTIVE_DEFAULT)) {
+    rctf rect_f;
+    BLI_rctf_rcti_copy(&rect_f, rect);
+
+    /* Focus ring color derived from the widget outline selected color with higher opacity. */
+    float focus_col[4];
+    focus_col[0] = wt->wcol.outline_sel[0] / 255.0f;
+    focus_col[1] = wt->wcol.outline_sel[1] / 255.0f;
+    focus_col[2] = wt->wcol.outline_sel[2] / 255.0f;
+    focus_col[3] = 0.8f; /* 80% opacity. */
+
+    const float zoom = 1.0f / but->block->aspect;
+    const float radius = widget_radius_from_zoom(zoom, &wt->wcol);
+    const float outline_width = 2.5f * UI_SCALE_FAC;
+
+    /* Only draw outline (no fill), with rounded corners consistent with widget. */
+    UI_draw_roundbox_4fv_ex(&rect_f, nullptr, nullptr, 1.0f, focus_col, outline_width, radius);
+  }
 }
 
 static void ui_draw_clip_tri(uiBlock *block, const rcti *rect, uiWidgetType *wt)
