@@ -1,0 +1,59 @@
+- name: area:core
+  color: 1d76db
+  description: Core/C++/engine changes
+- name: area:ui
+  color: 0052cc
+  description: UI/UX/theme/widgets
+- name: area:docs
+  color: 0e8a16
+  description: Documentation and guides
+- name: area:build
+  color: a2eeef
+  description: Build system, CMake, tooling
+- name: area:ci
+  color: bfd4f2
+  description: Continuous Integration workflows
+- name: area:extern
+  color: 5319e7
+  description: Extern/third-party libraries
+- name: area:addons
+  color: 8a4baf
+  description: Add-ons (core/contrib)
+- name: area:release
+  color: fbca04
+  description: Release, packaging, distribution
+
+- name: type:bug
+  color: d73a4a
+  description: Bug fix
+- name: type:enhancement
+  color: a2eeef
+  description: New feature or improvement
+- name: type:refactor
+  color: fbca04
+  description: Internal refactor
+- name: type:accessibility
+  color: c5def5
+  description: A11y/WCAG related changes
+- name: type:performance
+  color: ff7f3a
+  description: Performance optimizations
+
+- name: priority:high
+  color: b60205
+  description: High priority
+- name: priority:medium
+  color: fbca04
+  description: Medium priority
+- name: priority:low
+  color: 0e8a16
+  description: Low priority
+
+- name: status:needs-triage
+  color: eeeeee
+  description: Awaiting triage
+
+# Used by release-please for release PRs
+- name: autorelease: pending
+  color: 5319e7
+  description: Release-please pending

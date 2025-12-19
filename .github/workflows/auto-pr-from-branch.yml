@@ -1,0 +1,26 @@
+name: Auto PR from branch to master
+
+on:
+  push:
+    branches-ignore:
+      - master
+      - gh-pages
+    paths-ignore:
+      - .github/labels.yml
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  auto-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create PR to master
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "master"
+          pr_title: "Auto PR: ${{ github.ref_name }}"
+          pr_body: "Automated PR from branch '${{ github.ref_name }}'."
+          pr_label: "status:needs-triage"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
