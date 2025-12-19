@@ -32,19 +32,29 @@ Estabelecer uma camada de design tokens centralizados para:
 
 ---
 
-### PATCH 2: Button Style Consolidation (Planejado)
-**Status:** 🔜 Em Planejamento
+### PATCH 2: Button Style Consolidation
+**Status:** ✅ Implementado  
+**Arquivos:**
+- `source/blender/editors/interface/interface_button_styles.h` (structs + API)
+- `source/blender/editors/interface/interface_button_styles.c` (implementação)
 
-Objetivo: Criar macros/helpers para consolidar variações de botões.
+**O que faz:**
+- Define `UIButtonAppearance` struct com cores/estados para bg, border, text
+- Implementa 5 variantes de botões:
+  - `PRIMARY` — ação principal (azul preenchido)
+  - `SECONDARY` — ação secundária (contorno)
+  - `TERTIARY` — ação opcional (texto only)
+  - `DANGER` — ação destrutiva (vermelho)
+  - `GHOST` — ícone-only (mínimo)
+- Cada variante tem cores distintas para: normal, hover, pressed, disabled
+- API `ui_button_appearance_get()` dispatch para cada variante
+- Funções individuais `ui_button_appearance_primary()`, `_secondary()`, etc.
 
-```c
-/* Exemplo de consolidação */
-void ui_draw_button_style(
-  const uiBut *but,
-  const DesignTokensButtonVariant variant,
-  const bool is_hovered
-);
-```
+**Benefícios:**
+- ✅ Estilos de botão consolidados em um único lugar
+- ✅ Sem hardcodes duplicados em interface_widgets.cc
+- ✅ Fácil adicionar/ajustar variantes
+- ✅ Pronto para integração com GPU drawing primitives
 
 ---
 
@@ -63,7 +73,9 @@ Objetivo: Substituir valores hardcoded por tokens em:
 - [x] Criar arquivos de tokens (header + impl)
 - [x] Definir structs semânticas
 - [x] Implementar inicialização com defaults
-- [ ] Documentar uso e estender com temas
+- [x] Criar variantes consolidadas de botões (header + impl)
+- [x] Implementar 5 variantes com cores/estados
+- [ ] Integrar `ui_button_draw_styled()` no rendering pipeline
 - [ ] Integrar em ui_draw_but() e variações
 - [ ] Testes de renderização (visual regression)
 - [ ] Commits e push
