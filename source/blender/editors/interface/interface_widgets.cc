@@ -39,6 +39,7 @@
 #include "UI_view2d.hh"
 
 #include "interface_intern.hh"
+#include "interface_design_tokens.h"
 
 #include "GPU_batch.hh"
 #include "GPU_batch_presets.hh"
@@ -2730,6 +2731,11 @@ static void widget_state(uiWidgetType *wt,
 
 static float widget_radius_from_zoom(const float zoom, const uiWidgetColors *wcol)
 {
+  /* Use token-based radius when available, falling back to theme-based calculation. */
+  const DesignTokens *tokens = interface_design_tokens_get();
+  if (tokens && tokens->borders.radius_default > 0.0f) {
+    return tokens->borders.radius_default * zoom;
+  }
   return wcol->roundness * U.widget_unit * zoom;
 }
 
@@ -5413,16 +5419,27 @@ void ui_draw_but(const bContext *C, ARegion *region, uiStyle *style, uiBut *but,
     rctf rect_f;
     BLI_rctf_rcti_copy(&rect_f, rect);
 
-    /* Focus ring color derived from the widget outline selected color with higher opacity. */
+    /* Focus ring color from design tokens, falling back to theme outline_sel. */
     float focus_col[4];
-    focus_col[0] = wt->wcol.outline_sel[0] / 255.0f;
-    focus_col[1] = wt->wcol.outline_sel[1] / 255.0f;
-    focus_col[2] = wt->wcol.outline_sel[2] / 255.0f;
-    focus_col[3] = 0.8f; /* 80% opacity. */
+    const DesignTokens *tokens = interface_design_tokens_get();
+    if (tokens && tokens->colors.focus_ring[3] > 0) {
+      focus_col[0] = tokens->colors.focus_ring[0] / 255.0f;
+      focus_col[1] = tokens->colors.focus_ring[1] / 255.0f;
+      focus_col[2] = tokens->colors.focus_ring[2] / 255.0f;
+      focus_col[3] = tokens->colors.focus_ring[3] / 255.0f;
+    }
+    else {
+      focus_col[0] = wt->wcol.outline_sel[0] / 255.0f;
+      focus_col[1] = wt->wcol.outline_sel[1] / 255.0f;
+      focus_col[2] = wt->wcol.outline_sel[2] / 255.0f;
+      focus_col[3] = 0.8f; /* 80% opacity. */
+    }
 
     const float zoom = 1.0f / but->block->aspect;
     const float radius = widget_radius_from_zoom(zoom, &wt->wcol);
-    const float outline_width = 2.5f * UI_SCALE_FAC;
+    const float outline_width = (tokens && tokens->borders.border_width_focus > 0)
+                                     ? (tokens->borders.border_width_focus * UI_SCALE_FAC)
+                                     : (2.5f * UI_SCALE_FAC);
 
     /* Only draw outline (no fill), with rounded corners consistent with widget. */
     UI_draw_roundbox_4fv_ex(&rect_f, nullptr, nullptr, 1.0f, focus_col, outline_width, radius);

@@ -58,13 +58,24 @@ Estabelecer uma camada de design tokens centralizados para:
 
 ---
 
-### PATCH 3: Token Integration in interface_widgets.cc (Planejado)
-**Status:** 🔜 Em Planejamento
+### PATCH 3: Token Integration in interface_widgets.cc
+**Status:** ✅ Implementado  
+**Arquivos:**
+- `source/blender/editors/interface/interface_widgets.cc` (integração)
 
-Objetivo: Substituir valores hardcoded por tokens em:
-- `ui_draw_but()` → usar `tokens->button.min_height`, `tokens->borders.radius_default`
-- `ui_draw_button_text()` → usar `tokens->typography.font_size_md`
-- Focus ring → usar `tokens->colors.focus_ring` e `tokens->borders.border_width_focus`
+**O que faz:**
+- Adiciona include de `interface_design_tokens.h`
+- Atualiza `widget_radius_from_zoom()` para usar `tokens->borders.radius_default` com fallback
+- Atualiza focus ring para usar:
+  - `tokens->colors.focus_ring` para cor (fallback para outline_sel)
+  - `tokens->borders.border_width_focus` para largura (fallback para 2.5f)
+- Mantém compatibilidade com temas existentes via fallbacks
+
+**Benefícios:**
+- ✅ Radius e focus ring agora usam design tokens
+- ✅ Consistência visual entre widgets
+- ✅ Fácil ajustar globalmente via tokens
+- ✅ Backward compatible com temas existentes
 
 ---
 
@@ -75,10 +86,12 @@ Objetivo: Substituir valores hardcoded por tokens em:
 - [x] Implementar inicialização com defaults
 - [x] Criar variantes consolidadas de botões (header + impl)
 - [x] Implementar 5 variantes com cores/estados
-- [ ] Integrar `ui_button_draw_styled()` no rendering pipeline
-- [ ] Integrar em ui_draw_but() e variações
-- [ ] Testes de renderização (visual regression)
-- [ ] Commits e push
+- [x] Integrar tokens em widget_radius_from_zoom()
+- [x] Integrar tokens no focus ring rendering
+- [x] Manter compatibilidade com temas existentes via fallbacks
+- [x] Commits e push
+- [ ] Testes de renderização visual (próxima iteração)
+- [ ] Expandir integração para mais widgets (futuro)
 
 ---
 
